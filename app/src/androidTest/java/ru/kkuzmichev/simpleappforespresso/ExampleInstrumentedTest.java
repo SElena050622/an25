@@ -15,12 +15,25 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
+@RunWith(AllureAndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
+    @Rule
+    public ActivityTestRule<MainActivity> activityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
     @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("ru.kkuzmichev.simpleappforespresso", appContext.getPackageName());
+    }
+
+    @Test
+    public void mainActivityTest() {
+        ViewInteraction textView = onView(
+                withId(R.id.text_home)
+        );
+        textView.check(matches(isDisplayed()));
+        textView.check(matches(withText("This is home fragment")));
     }
 }
